@@ -18,7 +18,7 @@ LOCAL_PATH := device/samsung/afyonltetmo
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
 # Proprietary files
-$(call inherit-product, vendor/samsung/afyonltetmo/afyonltetmo-vendor.mk)
+$(call inherit-product, device/samsung/afyonltetmo/afyonltetmo-vendor-blobs.mk)
 
 # Media
 PRODUCT_COPY_FILES += \
