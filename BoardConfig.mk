@@ -61,25 +61,33 @@ TARGET_QCOM_DISPLAY_VARIANT := caf-new
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno305
 BOARD_EGL_CFG := $(LOCAL_PATH)/configs/egl.cfg
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
-OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 MAX_EGL_CACHE_KEY_SIZE := 12*1024
 MAX_EGL_CACHE_SIZE := 2048*1024
 
+# Encryption
+TARGET_HW_DISK_ENCRYPTION := true
+
+
 # Kernel
-BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
+BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37
+BOARD_CUSTOM_BOOTIMG_MK := device/samsung/afyonlte-common/mkbootimg.mk
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 androidboot.selinux=permissive
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000 --tags_offset 0x1e00000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
-BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000 --tags_offset 0x1e00000
-TARGET_KERNEL_SOURCE := kernel/samsung/afyonltetmo
 TARGET_KERNEL_CONFIG := msm8226-sec_defconfig
-TARGET_KERNEL_VARIANT_CONFIG := msm8926-sec_afyonltetmo_defconfig
 TARGET_KERNEL_SELINUX_CONFIG := selinux_defconfig
+TARGET_KERNEL_SOURCE := kernel/samsung/afyonltetmo
+
+# Lights
+TARGET_PROVIDES_LIBLIGHT := true
 
 # Media
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 TARGET_QCOM_MEDIA_VARIANT := caf-new
+
+# NFC
+BOARD_NFC_HAL_SUFFIX := msm8226
 
 # Recovery
 BOARD_HAS_NO_SELECT_BUTTON := true
@@ -119,3 +127,64 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 12631588352
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/file
+
+# Power
+TARGET_POWERHAL_SET_INTERACTIVE_EXT := device/samsung/afyonlte-common/power/power_ext.c
+TARGET_POWERHAL_VARIANT := qcom
+
+# SELinux
+BOARD_SEPOLICY_DIRS += \
+    device/samsung/afyonlte-common/sepolicy
+
+BOARD_SEPOLICY_UNION += \
+	adbd.te \
+	app.te \
+	bluetooth_loader.te \
+	bridge.te \
+	camera.te \
+	device.te \
+	dhcp.te \
+	dnsmasq.te \
+	domain.te \
+	drmserver.te \
+	file_contexts \
+	file.te \
+	hostapd.te \
+	init_shell.te \
+	init.te \
+	libqc-opt.te \
+	mediaserver.te \
+	mpdecision.te \
+	netd.te \
+	netmgrd.te \
+	nfc.te \
+	property_contexts \
+	property.te \
+	qcom.te \
+	qmux.te \
+	radio.te \
+	rild.te \
+	rmt.te \
+	sdcard_internal.te \
+	sdcardd.te \
+	sensors.te \
+	shell.te \
+	su.te \
+	surfaceflinger.te \
+	system.te \
+	tee.te \
+	te_macros \
+	thermald.te \
+	ueventd.te \
+	vold.te \
+	wpa_supplicant.te \
+	zygote.te
+
+# Time services
+BOARD_USES_QC_TIME_SERVICES := true
+
+# Vendor Init
+TARGET_UNIFIED_DEVICE := true
+TARGET_INIT_VENDOR_LIB := libinit_msm
+TARGET_LIBINIT_DEFINES_FILE := device/samsung/afyonlte-common/init/init_afyonlte.c
+
