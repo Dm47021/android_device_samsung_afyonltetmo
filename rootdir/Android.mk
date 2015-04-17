@@ -1,6 +1,6 @@
 LOCAL_PATH:= $(call my-dir)
 
-# Configuration scripts
+# Configuration scripts for avant
 
 include $(CLEAR_VARS)
 LOCAL_MODULE       := hcidump.sh
